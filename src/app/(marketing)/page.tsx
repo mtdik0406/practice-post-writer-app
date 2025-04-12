@@ -42,7 +42,7 @@ const page = () => {
         id="features"
         className="container mx-auto px-4 py-8 md:py-12 lg:py-24 bg-slate-50 space-y-8"
       >
-        <div className="text-center space-y-6 max-w-[58rem] mx-auto">
+        <div className="max-w-[58rem] mx-auto text-center space-y-6 ">
           <h2 className="font-extrabold text-3xl md:text-6xl">
             サービスの特徴
           </h2>
@@ -126,6 +126,28 @@ const page = () => {
           <p className="text-muted-foreground sm:text-lg sm:leading-7">
             Post Writerはログインするとブログ投稿ができるようになります。
           </p>
+        </div>
+      </section>
+
+      <section
+        id="contact"
+        className="container mx-auto px-4 py-8 md:py-12 lg:py-24"
+      >
+        <div className="max-w-[58rem] mx-auto text-center space-y-6">
+          <h2 className="font-extrabold text-3xl md:text-6xl">Contact Me </h2>
+          <p className="text-muted-foreground sm:text-lg sm:leading-7">
+            もしサービスが気に入った場合は下記XからDMでご連絡ください
+            <br />
+            お仕事のご連絡をお待ちしております。
+          </p>
+          <Link
+            href={siteConfig.links.x}
+            className="underline underline-offset-4"
+            target="_blank"
+            rel="noreferrer"
+          >
+            お仕事はXまで
+          </Link>
         </div>
       </section>
     </>
