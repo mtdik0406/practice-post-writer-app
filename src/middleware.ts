@@ -1,19 +1,3 @@
-// import { withAuth } from "next-auth/middleware";
-// import { NextResponse } from "next/server";
-
-// export default withAuth(function middleware(req) {
-//   const isLoggedIn = !!req.nextauth.token;
-//   const isAuthPage = req.nextUrl.pathname.startsWith("/login");
-
-//   if (isLoggedIn && isAuthPage) {
-//     return NextResponse.redirect(new URL("/dashboard", req.url));
-//   }
-// });
-
-// export const config = {
-//   matcher: ["/dashboard/:path*", "/editor/:path*"],
-// };
-
 import { withAuth } from "next-auth/middleware";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
