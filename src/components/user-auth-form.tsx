@@ -1,9 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import { Icon } from "./icon";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { signIn } from "next-auth/react";
 
 export default function UserAuthForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="grid gap-6">
       <form>
@@ -27,8 +33,17 @@ export default function UserAuthForm() {
         </div>
       </div>
 
-      <Button>
-        <Icon.github />
+      <Button
+        onClick={() => {
+          setIsLoading(true);
+          signIn("github");
+        }}
+      >
+        {isLoading ? (
+          <Icon.spinner className="animate-spin" />
+        ) : (
+          <Icon.github />
+        )}
         Githubでログイン
       </Button>
     </div>
