@@ -8,7 +8,8 @@ import { Label } from "./ui/label";
 import { signIn } from "next-auth/react";
 
 export default function UserAuthForm() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isGithubLoading, setIsGithubLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   return (
     <div className="grid gap-6">
@@ -33,19 +34,34 @@ export default function UserAuthForm() {
         </div>
       </div>
 
-      <Button
-        onClick={() => {
-          setIsLoading(true);
-          signIn("github");
-        }}
-      >
-        {isLoading ? (
-          <Icon.spinner className="animate-spin" />
-        ) : (
-          <Icon.github />
-        )}
-        Githubでログイン
-      </Button>
+      <div className="flex flex-col gap-2">
+        <Button
+          onClick={() => {
+            setIsGithubLoading(true);
+            signIn("github");
+          }}
+        >
+          {isGithubLoading ? (
+            <Icon.spinner className="animate-spin" />
+          ) : (
+            <Icon.github />
+          )}
+          Githubでログイン
+        </Button>
+        <Button
+          onClick={() => {
+            setIsGoogleLoading(true);
+            signIn("google");
+          }}
+        >
+          {isGoogleLoading ? (
+            <Icon.spinner className="animate-spin" />
+          ) : (
+            <Icon.google />
+          )}
+          Googleでログイン
+        </Button>
+      </div>
     </div>
   );
 }
