@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Icon } from "./icon";
+import { Icons } from "./icon";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -42,9 +42,9 @@ export default function UserAuthForm() {
           }}
         >
           {isGithubLoading ? (
-            <Icon.spinner className="animate-spin" />
+            <Icons.spinner className="animate-spin" />
           ) : (
-            <Icon.github />
+            <Icons.github />
           )}
           Githubでログイン
         </Button>
@@ -55,9 +55,9 @@ export default function UserAuthForm() {
           }}
         >
           {isGoogleLoading ? (
-            <Icon.spinner className="animate-spin" />
+            <Icons.spinner className="animate-spin" />
           ) : (
-            <Icon.google />
+            <Icons.google />
           )}
           Googleでログイン
         </Button>
