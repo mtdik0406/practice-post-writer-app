@@ -1,7 +1,12 @@
+import DashBoardHeader from "@/components/dashboard-header";
+import DashboardShell from "@/components/dashboard-shell";
+
 export default function Dashboard() {
   return (
-    <div>
-      <div>DashboardPage</div>
-    </div>
+    <DashboardShell>
+      <DashBoardHeader heading="記事投稿" text="記事の投稿と管理">
+        create
+      </DashBoardHeader>
+    </DashboardShell>
   );
 }
