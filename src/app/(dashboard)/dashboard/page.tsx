@@ -33,11 +33,15 @@ export default async function Dashboard() {
         <PostCreateButton />
       </DashBoardHeader>
       <div>
-        <div className="divide-y border rounded-md">
-          {posts.map((post) => (
-            <PostItem key={post.id} post={post} />
-          ))}
-        </div>
+        {posts.length ? (
+          <div className="divide-y border rounded-md">
+            {posts.map((post) => (
+              <PostItem key={post.id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <div className="ml-2">投稿がありません。</div>
+        )}
       </div>
     </DashboardShell>
   );
