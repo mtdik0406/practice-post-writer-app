@@ -2,7 +2,7 @@ import Editor from "@/components/editor";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { Post, User } from "@prisma/client";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 interface EditorProps {
   params: Promise<{ postId: string }>;
@@ -29,8 +29,7 @@ export default async function EditorPage({ params }: EditorProps) {
 
   const post = await getPostForUser(postId, user?.id);
   if (!post) {
-    // TODO：エラー処理
-    return;
+    notFound();
   }
 
   return (
