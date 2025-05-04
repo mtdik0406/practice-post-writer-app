@@ -9,6 +9,9 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import CodeTool from "@editorjs/code";
 import { Post } from "@prisma/client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { postPatchSchema, postPatchSchemaType } from "@/lib/validations/post";
 
 interface EditorProps {
   post: Pick<Post, "id" | "title" | "content" | "published">;
@@ -53,8 +56,18 @@ export default function Editor({ post }: EditorProps) {
     };
   }, []);
 
+  const { register, handleSubmit } = useForm<postPatchSchemaType>({
+    resolver: zodResolver(postPatchSchema),
+  });
+
+  const onSubmit = async (data: postPatchSchemaType) => {
+    const blocks = await editorRef.current?.save();
+    console.log(data);
+    console.log(blocks);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-10">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center space-x-10">
@@ -74,6 +87,7 @@ export default function Editor({ post }: EditorProps) {
             placeholder="Post Title"
             defaultValue={post.title}
             className="w-full resize-none overflow-hidden bg-transparent text-5xl focus:outline-none font-bold"
+            {...register("title")}
           />
         </div>
         <div id="editor" className="min-h-[500px]"></div>
