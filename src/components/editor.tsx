@@ -12,6 +12,8 @@ import { Post } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postPatchSchema, postPatchSchemaType } from "@/lib/validations/post";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface EditorProps {
   post: Pick<Post, "id" | "title" | "content" | "published">;
@@ -19,6 +21,7 @@ interface EditorProps {
 
 export default function Editor({ post }: EditorProps) {
   const editorRef = useRef<EditorJS | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const initEditor = async () => {
@@ -36,9 +39,7 @@ export default function Editor({ post }: EditorProps) {
             list: List,
             code: CodeTool,
           },
-          data: {
-            blocks: [],
-          },
+          data: post.content as any,
         });
         editorRef.current = editor;
       }
@@ -54,6 +55,7 @@ export default function Editor({ post }: EditorProps) {
         editorRef.current = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { register, handleSubmit } = useForm<postPatchSchemaType>({
@@ -62,8 +64,30 @@ export default function Editor({ post }: EditorProps) {
 
   const onSubmit = async (data: postPatchSchemaType) => {
     const blocks = await editorRef.current?.save();
-    console.log(data);
-    console.log(blocks);
+
+    const response = await fetch(`/api/posts/${post.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: data.title,
+        content: blocks,
+      }),
+    });
+
+    if (!response.ok) {
+      return toast.error("問題が発生しました", {
+        description: "投稿が保存されませんでした。もう一度お試しください。",
+        closeButton: true,
+      });
+    }
+
+    router.refresh();
+
+    return toast.success("正常に保存されました。", {
+      closeButton: true,
+    });
   };
 
   return (
